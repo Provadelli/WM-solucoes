@@ -3,61 +3,40 @@
   --on: var(--night);
 
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  min-height: 48px;
-  padding: 0.75rem 1.6rem;
-  border: 2px solid var(--c);
-  border-radius: var(--radius-pill);
+  min-height: 50px;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid var(--c);
+  border-radius: var(--radius-btn);
   background: transparent;
   color: var(--c);
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.005em;
   line-height: 1.1;
   text-decoration: none;
   cursor: pointer;
   transition:
-    color 0.4s var(--ease-current),
-    transform 0.2s var(--ease-out),
-    box-shadow 0.4s ease;
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Preenchimento que "energiza" o botão: entra pela esquerda, sai pela direita */
-.btn::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--c);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.45s var(--ease-current);
-}
-
 .btn:hover,
-.btn:focus-visible,
-.btn[aria-pressed='true'] {
+.btn:focus-visible {
+  border-color: var(--c);
+  background: var(--c);
   color: var(--on);
-  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--c) 70%, transparent);
-}
-
-.btn:hover::before,
-.btn:focus-visible::before,
-.btn[aria-pressed='true']::before {
-  transform: scaleX(1);
-  transform-origin: left;
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .btn__icon {
@@ -65,26 +44,16 @@
   transition: transform 0.35s var(--ease-out);
 }
 
-.btn:hover .btn__icon--after {
+.btn:hover .btn__icon--after,
+.btn:focus-visible .btn__icon--after {
   transform: translateX(4px);
 }
 
-/* Onda do clique */
-.btn__ripple {
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--on) 22%, transparent);
-  transform: scale(0);
-  pointer-events: none;
-  animation: btn-ripple 0.65s var(--ease-out) forwards;
-}
-
-@keyframes btn-ripple {
-  to {
-    transform: scale(1);
-    opacity: 0;
-  }
+/* Estado ligado (botões do simulador) */
+.btn[aria-pressed='true'] {
+  background: var(--c);
+  border-color: var(--c);
+  color: var(--on);
 }
 
 /* Variantes */
@@ -113,18 +82,7 @@
 }
 
 .btn--sm {
-  min-height: 44px;
-  font-size: 1.02rem;
-  padding: 0.55rem 1.15rem;
-}
-
-.btn--icon {
-  width: 48px;
-  padding: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn__ripple {
-    display: none;
-  }
+  min-height: 42px;
+  font-size: 0.94rem;
+  padding: 0.55rem 1rem;
 }

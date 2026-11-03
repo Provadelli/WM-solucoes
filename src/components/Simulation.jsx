@@ -9,13 +9,15 @@ export default function Simulation() {
   const ref = useReveal()
   return (
     <section id="simulacao" className="simulation" aria-labelledby="sim-title" ref={ref}>
+      <div className="tech-grid" aria-hidden="true" />
       <div className="container simulation__grid">
         <div className="simulation__copy">
           <h2 id="sim-title" className="reveal">
-            Testamos a lógica antes de ligar a máquina
+            Testamos a lógica <span className="hl">antes</span> de ligar a máquina
           </h2>
           <p className="reveal" style={{ '--i': 1 }}>
-            Experimente: aperte Partida, depois Parar ou Emergência.
+            Cada CLP é programado e testado em gêmeo digital antes de chegar à sua máquina. Experimente: aperte
+            Partida, depois Parar ou Emergência.
           </p>
         </div>
 

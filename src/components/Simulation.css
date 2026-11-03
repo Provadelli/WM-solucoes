@@ -10,6 +10,7 @@
 }
 
 .simulation__grid {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(2.5rem, 5vw, 5rem);
@@ -64,6 +65,7 @@
   aspect-ratio: 560 / 420;
   border-radius: var(--radius-l);
   background: var(--night-2);
+  border: 1px solid rgb(255 255 255 / 0.08);
 }
 
 @media (max-width: 960px) {

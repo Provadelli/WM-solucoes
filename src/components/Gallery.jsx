@@ -34,45 +34,57 @@ export default function Gallery() {
   return (
     <section id="projetos" className="gallery" aria-labelledby="gallery-title" ref={ref}>
       <div className="container">
-        <header className="section-head">
+        <header className="section-head section-head--split">
           <h2 id="gallery-title" className="reveal">
-            Painéis e projetos entregues
+            Painéis e projetos <span className="hl">entregues</span>
           </h2>
           <p className="reveal" style={{ '--i': 1 }}>
-            Toque em uma imagem para ampliar.
+            Arraste para o lado e conheça o que já saiu da nossa bancada para o chão de fábrica.
           </p>
         </header>
+      </div>
 
-        <div className="reveal" style={{ '--i': 2 }}>
-          <Carousel label="Galeria de projetos" options={{ align: 'start', dragFree: true }}>
-            {gallery.map((g, i) => {
-              const p = photo(g.name)
-              return (
-                <figure key={g.name} className="gcard">
-                  <button type="button" className="gcard__btn" onClick={(e) => open(i, e)}>
-                    <img
-                      src={p.src}
-                      srcSet={p.srcSet}
-                      sizes="(max-width: 640px) 78vw, (max-width: 1000px) 44vw, 360px"
-                      width={p.width}
-                      height={p.height}
-                      alt={g.title}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <span className="gcard__zoom" aria-hidden="true">
-                      <Icon name="expand" size={18} />
-                    </span>
-                    <span className="sr-only">Ampliar imagem</span>
+      <div className="gallery__rail reveal" style={{ '--i': 2 }}>
+        <Carousel label="Projetos entregues">
+          {gallery.map((g, i) => {
+            const p = photo(g.name)
+            return (
+              <article key={g.name} className="pcard">
+                <div className="pcard__media">
+                  <img
+                    src={p.src}
+                    srcSet={p.srcSet}
+                    sizes="(max-width: 640px) 82vw, 360px"
+                    width={p.width}
+                    height={p.height}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                  />
+                  <span className="pcard__cat">{g.category}</span>
+                  <span className="pcard__idx" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="pcard__body">
+                  <h3 className="pcard__title">{g.title}</h3>
+                  <p className="pcard__text">{g.text}</p>
+                  <ul className="pcard__specs">
+                    {g.specs.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                  <button type="button" className="pcard__cta" onClick={(e) => open(i, e)}>
+                    Ver em detalhe
+                    <span className="sr-only">: {g.title}</span>
+                    <Icon name="expand" size={16} />
                   </button>
-                  <figcaption>
-                    {g.title}
-                  </figcaption>
-                </figure>
-              )
-            })}
-          </Carousel>
-        </div>
+                </div>
+              </article>
+            )
+          })}
+        </Carousel>
       </div>
 
       <dialog
@@ -90,14 +102,16 @@ export default function Gallery() {
           <div className="lightbox__inner" key={current}>
             <img src={big.src} srcSet={big.srcSet} sizes="90vw" width={big.width} height={big.height} alt={item.title} />
             <div className="lightbox__bar">
-              <p>
-                {item.title}
-              </p>
+              <div className="lightbox__info">
+                <span className="lightbox__cat">{item.category}</span>
+                <p className="lightbox__title">{item.title}</p>
+                <p className="lightbox__text">{item.text}</p>
+              </div>
               <div className="lightbox__nav">
-                <button type="button" onClick={() => step(-1)} aria-label="Imagem anterior">
+                <button type="button" onClick={() => step(-1)} aria-label="Projeto anterior">
                   <Icon name="prev" size={20} strokeWidth={2.2} />
                 </button>
-                <button type="button" onClick={() => step(1)} aria-label="Próxima imagem">
+                <button type="button" onClick={() => step(1)} aria-label="Próximo projeto">
                   <Icon name="next" size={20} strokeWidth={2.2} />
                 </button>
                 <button type="button" onClick={close} aria-label="Fechar" autoFocus>

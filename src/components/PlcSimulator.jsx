@@ -31,6 +31,7 @@ function Coil({ x, y, addr, name, on }) {
     <g className={`coil ${on ? 'is-on' : ''}`}>
       <text x={x} y={y - 24} className="sym__addr">{addr}</text>
       <circle cx={x} cy={y} r="13" className="coil__core" />
+      {on && <circle cx={x} cy={y} r="13" className="coil__pulse" />}
       <path d={`M ${x - 5} ${y - 14} A 15 15 0 0 0 ${x - 5} ${y + 14}`} />
       <path d={`M ${x + 5} ${y - 14} A 15 15 0 0 1 ${x + 5} ${y + 14}`} />
       <text x={x} y={y + 34} className="sym__name">{name}</text>
@@ -115,6 +116,19 @@ export default function PlcSimulator() {
   return (
     <div className="plc" role="group" aria-label="Simulador de CLP" ref={rootRef}>
       <svg className="plc__ladder" viewBox="0 0 560 290" role="img" aria-label={`Diagrama ladder. Motor: ${status}.`}>
+        <defs>
+          <pattern id="plc-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M20 0H0V20" fill="none" className="plc__gridline" />
+          </pattern>
+          <linearGradient id="plc-scan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#19b3c4" stopOpacity="0" />
+            <stop offset="1" stopColor="#19b3c4" stopOpacity="0.22" />
+          </linearGradient>
+        </defs>
+        <rect width="560" height="290" fill="url(#plc-grid)" />
+        {/* Varredura do CLP percorrendo as linhas */}
+        <rect x="24" y="0" width="512" height="36" fill="url(#plc-scan)" className="plc__scanline" />
+
         {/* Barramentos */}
         <line x1="24" y1="28" x2="24" y2="268" className="rail rail--on" />
         <line x1="536" y1="28" x2="536" y2="268" className="rail" />
@@ -169,7 +183,10 @@ export default function PlcSimulator() {
           </div>
           <div>
             <dt>Rotação</dt>
-            <dd>{Math.round(rpm).toLocaleString('pt-BR')} rpm</dd>
+            <dd>
+              {Math.round(rpm).toLocaleString('pt-BR')} rpm
+              <span className="hmi__bar" style={{ '--v': rpm / 1750 }} aria-hidden="true" />
+            </dd>
           </div>
           <div>
             <dt>Partidas</dt>

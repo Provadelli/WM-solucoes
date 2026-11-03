@@ -8,6 +8,7 @@ import './Header.css'
 export default function Header({ base = '' }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [current, setCurrent] = useState('')
   const headerRef = useRef(null)
   const toggleRef = useRef(null)
   useScrollProgress(headerRef, '--page', 'page')
@@ -17,6 +18,22 @@ export default function Header({ base = '' }) {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Destaca no menu a seção que está na tela
+  useEffect(() => {
+    const sections = nav.map((n) => document.querySelector(n.href)).filter(Boolean)
+    if (!sections.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setCurrent('#' + e.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    sections.forEach((s) => io.observe(s))
+    return () => io.disconnect()
   }, [])
 
   // Menu mobile: trava a rolagem, isola o resto da página e fecha com Esc
@@ -50,7 +67,12 @@ export default function Header({ base = '' }) {
           <ul>
             {nav.map((item, i) => (
               <li key={item.href} style={{ '--i': i }}>
-                <a href={`${base}${item.href}`} onClick={() => setOpen(false)}>
+                <a
+                  href={`${base}${item.href}`}
+                  onClick={() => setOpen(false)}
+                  className={current === item.href ? 'is-current' : undefined}
+                  aria-current={current === item.href ? 'location' : undefined}
+                >
                   {item.label}
                 </a>
               </li>

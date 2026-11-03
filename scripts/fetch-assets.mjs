@@ -17,8 +17,34 @@ const photos = {
   'foto-5': 'whatsapp-image-2026-07-13-at-21.13.42-d4OJwUIPPMtk3iey.jpeg',
   'foto-6': 'whatsapp-image-2026-07-13-at-21.26.33-BgU2zdFbuwr9sZGr.jpeg',
   'foto-7': 'whatsapp-image-2026-07-13-at-22.23.14-OGG8o8DSFUMr3Ea0.jpeg',
+
+  // Subpágina Programação de CLP
+  'clp-ihm-painel': 'whatsapp-image-2026-07-23-at-15.08.16-nXcstJXELndNYRNi.jpeg',
+  'clp-ihm': 'whatsapp-image-2026-07-23-at-17.58.55-FcaMZ5Qsf1uxXBTZ.jpeg',
+  'clp-startup': 'whatsapp-image-2026-07-23-at-20.50.59-V32E3IydjioZWdd3.jpeg',
+  'clp-opc': 'whatsapp-image-2026-07-23-at-21.17.44-UWZ3Xr6UR8YKywCR.jpeg',
+  'clp-modbus': 'whatsapp-image-2026-07-23-at-21.36.07-TVN5O7Rylz03Fm5R.jpeg',
+  'clp-can': 'whatsapp-image-2026-07-23-at-21.55.09-vwdfqpYXg4iwMxC6.jpeg',
+  'clp-arquitetura': 'whatsapp-image-2026-07-23-at-21.58.48-Y3Pk3tVJwfzpgz0a.jpeg',
+
+  // Subpágina Movimentação de carga
+  'carga-roletes': 'chatgpt-image-21-de-jul.-de-2026-14_52_43-6rXfNO8Ecq2cNG4R.png',
+  'carga-braco': 'chatgpt-image-21-de-jul.-de-2026-15_19_12-0hI6MRWGcj6URvFS.png',
+  'carga-ponte-galpao': 'chatgpt-image-21-de-jul.-de-2026-15_57_11-S7N0FRaRfKRYV7wc.png',
+  'carga-portico': 'chatgpt-image-22-de-jul.-de-2026-15_58_53-JlQWuPELW96bm9dc.png',
+  'carga-retrofit': 'chatgpt-image-22-de-jul.-de-2026-16_33_01-QHKxTdQlyPZEYseH.png',
+  'carga-ponte': 'ponte-editada-3-uiv4rKg6Ir9apYja.png',
+
+  // Subpágina Painéis Elétricos
+  'painel-bornes': 'bszrsq-mZlM6pIFy5BeZnbl.png',
+  'painel-io': 'n3ejkh-K6WppofceB20DzXA.png',
+  'painel-barramento': 'r1ygya-reP4F1LgCRQEpfE4.png',
+  'painel-montagem': 'ub6b5s-N8qmDupRkcUPIfOV.png',
+
+  // Subpágina Integração de Sistemas
+  'int-painel': 'x2roxt-rnqJbkL0Z1Xm0Isr.png',
 }
-const WIDTHS = [360, 640, 960, 1440]
+const WIDTHS = [360, 640, 960]
 
 async function get(file) {
   const res = await fetch(SRC + file)

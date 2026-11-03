@@ -94,8 +94,7 @@
   left: 0;
   right: 0;
   bottom: 0.25rem;
-  height: 2px;
-  border-radius: 2px;
+  height: 1.5px;
   background: var(--orange);
   transform: scaleX(0);
   transform-origin: right;
@@ -106,7 +105,12 @@
   color: var(--white);
 }
 
-.header__nav ul a:hover::after {
+.header__nav ul a.is-current {
+  color: var(--white);
+}
+
+.header__nav ul a:hover::after,
+.header__nav ul a.is-current::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -123,8 +127,8 @@
     width: 48px;
     height: 48px;
     background: transparent;
-    border: 2px solid rgb(255 255 255 / 0.55);
-    border-radius: 50%;
+    border: 1.5px solid rgb(255 255 255 / 0.45);
+    border-radius: var(--radius-btn);
     color: var(--white);
     cursor: pointer;
     transition: border-color 0.2s ease, transform 0.2s ease;

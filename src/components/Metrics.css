@@ -1,75 +1,122 @@
 .metrics__list {
+  position: relative;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 1.75rem;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  border: 1px solid rgb(255 255 255 / 0.14);
-  border-radius: var(--radius-m);
-  overflow: hidden;
-  background: rgb(255 255 255 / 0.1);
-  backdrop-filter: blur(14px) saturate(130%);
-  /* compensa a perda de contraste do vidro: fundo escuro translúcido */
-  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  gap: clamp(1.4rem, 3.5vh, 2.1rem);
+}
+
+/* Condutor vertical: apagado por baixo, energizado por cima */
+.metrics__list::before,
+.metrics__list::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: rgb(255 255 255 / 0.2);
+}
+
+.metrics__list::after {
+  width: 2px;
+  left: -0.5px;
+  background: linear-gradient(180deg, var(--orange), var(--petrol-bright));
+  box-shadow: 0 0 12px rgb(255 107 0 / 0.55);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: rail-fill 1.8s var(--ease-soft) 0.9s forwards;
+}
+
+@keyframes rail-fill {
+  to {
+    transform: scaleY(1);
+  }
 }
 
 .metric {
   position: relative;
   display: grid;
-  gap: 0.35rem;
-  padding: 1.4rem 1.6rem 1.6rem;
-  background: rgb(10 15 29 / 0.72);
-  animation: fade-up 0.8s var(--ease-out) both;
-  animation-delay: calc(0.45s + var(--i) * 0.08s);
+  gap: 0.3rem;
+  animation: metric-in 0.9s var(--ease-out) both;
+  animation-delay: calc(0.9s + var(--i) * 0.15s);
+}
+
+/* Nó do condutor que acende quando a energia chega */
+.metric::before {
+  content: '';
+  position: absolute;
+  left: calc(-1.75rem - 4px);
+  top: 0.6rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--night);
+  border: 1.5px solid rgb(255 255 255 / 0.4);
+  animation: node-on 0.5s ease forwards;
+  animation-delay: calc(1.2s + var(--i) * 0.45s);
+}
+
+@keyframes node-on {
+  to {
+    background: var(--orange);
+    border-color: var(--orange);
+    box-shadow:
+      0 0 0 4px rgb(255 107 0 / 0.18),
+      0 0 14px rgb(255 107 0 / 0.8);
+  }
+}
+
+@keyframes metric-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
 }
 
 .metric__value {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 3.6vw, 3rem);
-  font-weight: 700;
+  font-size: clamp(2.3rem, 3.4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
+.metric__suffix {
+  margin-left: 0.06em;
+  font-size: 0.55em;
+  color: var(--orange);
+  vertical-align: 0.65em;
+}
+
 .metric__label {
-  font-size: var(--fs-sm);
-  color: rgb(255 255 255 / 0.78);
-  line-height: 1.4;
-  max-width: 28ch;
+  font-size: 0.92rem;
+  color: rgb(255 255 255 / 0.72);
+  line-height: 1.45;
+  max-width: 26ch;
 }
 
-/* Barra que "carrega" junto com o número */
-.metric__bar {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 100%;
-  background: linear-gradient(90deg, var(--petrol-bright), var(--orange));
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: bar-fill 1.6s var(--ease-out) both;
-  animation-delay: calc(0.6s + var(--i) * 0.12s);
-}
-
-@keyframes bar-fill {
-  to {
-    transform: scaleX(1);
+@media (max-width: 960px) {
+  .metrics {
+    padding-top: 1.75rem;
+    border-top: 1px solid rgb(255 255 255 / 0.14);
   }
-}
-
-@media (max-width: 760px) {
   .metrics__list {
-    grid-template-columns: 1fr;
+    padding: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
   }
-  .metric {
-    padding: 1rem 1.25rem 1.2rem;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    column-gap: 1rem;
+  .metrics__list::before,
+  .metrics__list::after,
+  .metric::before {
+    display: none;
   }
   .metric__value {
-    min-width: 3.2ch;
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+  }
+  .metric__label {
+    font-size: 0.8rem;
   }
 }

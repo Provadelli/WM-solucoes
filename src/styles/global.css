@@ -17,6 +17,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--fs-base);
   line-height: 1.6;
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -32,15 +33,24 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.005em;
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
   margin: 0;
 }
 
 h2 {
-  font-size: clamp(2.3rem, 4.6vw, 3.6rem);
+  font-size: clamp(2.1rem, 4.2vw, 3.4rem);
   text-wrap: balance;
+}
+
+/* Palavra de destaque nos títulos */
+.hl {
+  color: var(--orange);
+}
+
+.on-light .hl {
+  color: var(--orange-deep);
 }
 
 p {
@@ -75,8 +85,36 @@ button {
 }
 
 .section-head p {
-  font-size: var(--fs-md);
-  line-height: 1.5;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.72);
+  max-width: 52ch;
+}
+
+/* Cabeçalho de seção em duas colunas: título à esquerda, texto à direita */
+.section-head--split {
+  max-width: none;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: end;
+  gap: 1.5rem 4rem;
+}
+
+@media (max-width: 860px) {
+  .section-head--split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Grade técnica de fundo, reutilizável */
+.tech-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-c, rgb(255 255 255 / 0.045)) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-c, rgb(255 255 255 / 0.045)) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 80%);
 }
 
 .sr-only {
@@ -96,7 +134,7 @@ button {
   background: var(--orange);
   color: var(--night);
   padding: 0.7rem 1.1rem;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-btn);
   font-weight: 600;
 }
 

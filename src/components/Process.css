@@ -1,54 +1,116 @@
 .process {
+  position: relative;
   padding-block: var(--section);
   color: var(--white);
   background:
-    radial-gradient(ellipse 70% 80% at 100% 0%, rgb(5 116 130 / 0.5), transparent 60%),
+    radial-gradient(ellipse 70% 80% at 100% 0%, rgb(5 116 130 / 0.55), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgb(10 15 29 / 0.5), transparent 70%),
     var(--steel);
+  overflow: hidden;
+}
+
+.process .tech-grid {
+  --grid-c: rgb(255 255 255 / 0.06);
+}
+
+.process .container {
+  position: relative;
 }
 
 .process .section-head p {
-  color: rgb(255 255 255 / 0.85);
+  color: rgb(255 255 255 / 0.8);
+}
+
+.process .hl {
+  color: var(--orange-soft);
+}
+
+/* ---------- Trilho ---------- */
+.process__track {
+  --node: 56px;
+  --progress: 0;
+  /* energia: chega ao fim um pouco antes do fim da rolagem */
+  --e: min(1, calc(var(--progress) * 1.35));
+  position: relative;
+}
+
+/* Condutor apagado e energizado */
+.process__track::before,
+.process__track::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--node) / 2 - 1px);
+  left: calc(var(--node) / 2);
+  right: calc(25% - var(--node) / 2);
+  height: 2px;
+  background: rgb(255 255 255 / 0.18);
+}
+
+.process__track::after {
+  height: 3px;
+  top: calc(var(--node) / 2 - 1.5px);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 18px, rgb(255 255 255 / 0.75) 18px 24px, transparent 24px 60px),
+    linear-gradient(90deg, var(--petrol-bright), var(--orange));
+  background-size:
+    60px 100%,
+    100% 100%;
+  box-shadow: 0 0 14px rgb(255 107 0 / 0.7);
+  transform: scaleX(var(--e));
+  transform-origin: left;
+  animation: current-flow 0.9s linear infinite;
+}
+
+@keyframes current-flow {
+  to {
+    background-position:
+      60px 0,
+      0 0;
+  }
+}
+
+/* Faísca na ponta da energia */
+.process__spark {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--node) / 2 - 5px);
+  left: calc(var(--node) / 2 - 5px + 75% * var(--e));
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff3e8;
+  box-shadow:
+    0 0 0 4px rgb(255 107 0 / 0.35),
+    0 0 18px 4px rgb(255 107 0 / 0.9);
+  opacity: min(1, calc(var(--e) * 20));
+  animation: spark 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes spark {
+  to {
+    box-shadow:
+      0 0 0 7px rgb(255 107 0 / 0.15),
+      0 0 26px 6px rgb(255 107 0 / 0.9);
+  }
 }
 
 .process__steps {
-  --node: 56px;
-  --progress: 0;
   position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2rem;
-}
-
-/* Condutor apagado */
-.process__steps::before,
-.process__steps::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--node) / 2 - 1.5px);
-  left: calc(var(--node) / 2);
-  right: calc(25% - var(--node) / 2 + 0.5rem);
-  height: 3px;
-  border-radius: 3px;
-  background: rgb(255 255 255 / 0.2);
-}
-
-/* Condutor energizado: acompanha a rolagem */
-.process__steps::after {
-  background: linear-gradient(90deg, var(--petrol-bright), var(--orange));
-  box-shadow: 0 0 12px rgb(255 107 0 / 0.7);
-  transform: scaleX(min(1, calc(var(--progress) * 1.35)));
-  transform-origin: left;
+  gap: 0;
 }
 
 .pstep {
   /* acende quando o condutor chega até a etapa */
-  --lit: clamp(0, calc((var(--progress) * 1.35 * 3 - var(--n)) * 4 + 1), 1);
+  --lit: clamp(0, calc((var(--e) * 3 - var(--n)) * 4 + 1), 1);
   position: relative;
 }
 
+/* ---------- Nó sobre a linha ---------- */
 .pstep__node {
   position: relative;
   z-index: 1;
@@ -56,68 +118,104 @@
   place-items: center;
   width: var(--node);
   height: var(--node);
-  margin-bottom: 1.5rem;
   border-radius: 50%;
-  border: 3px solid rgb(255 255 255 / 0.35);
+  border: 1px solid rgb(255 255 255 / 0.35);
   background: var(--steel);
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: var(--white);
 }
 
+/* Anel aceso */
 .pstep__node::before {
   content: '';
   position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 3px solid var(--orange);
-  background: rgb(255 107 0 / 0.18);
-  box-shadow: 0 0 22px rgb(255 107 0 / 0.65);
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid var(--orange);
+  background: radial-gradient(circle, rgb(255 107 0 / 0.28), rgb(255 107 0 / 0.08) 70%);
+  box-shadow:
+    0 0 0 6px rgb(255 107 0 / calc(var(--lit) * 0.1)),
+    0 0 28px rgb(255 107 0 / 0.55);
   opacity: var(--lit);
   transform: scale(calc(0.7 + var(--lit) * 0.3));
 }
 
-.pstep__node > span {
+.pstep__icon {
   position: relative;
+  color: var(--white);
+  opacity: calc(0.55 + var(--lit) * 0.45);
+}
+
+/* Fio fino do nó até o texto */
+.pstep__node::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 2rem;
+  background: linear-gradient(180deg, var(--orange), transparent);
+  transform: scaleY(var(--lit));
+  transform-origin: top;
+}
+
+/* ---------- Descrição ---------- */
+.pstep__body {
+  padding-top: 2.4rem;
+  padding-right: 1.5rem;
+  opacity: calc(0.45 + var(--lit) * 0.55);
+  transform: translateY(calc((1 - var(--lit)) * 12px));
 }
 
 .pstep h3 {
-  font-size: var(--fs-lg);
-  margin-bottom: 0.5rem;
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.6rem;
 }
 
 .pstep p {
-  color: rgb(255 255 255 / 0.85);
-  max-width: 28ch;
+  color: rgb(255 255 255 / 0.8);
+  line-height: 1.6;
+  max-width: 26ch;
 }
 
 @media (max-width: 860px) {
   .process__steps {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 1.5rem;
   }
-  .process__steps::before,
-  .process__steps::after {
+  .process__track::before,
+  .process__track::after {
     top: calc(var(--node) / 2);
     bottom: 3rem;
-    left: calc(var(--node) / 2 - 1.5px);
+    left: calc(var(--node) / 2 - 1px);
     right: auto;
-    width: 3px;
+    width: 2px;
     height: auto;
   }
-  .process__steps::after {
+  .process__track::after {
+    width: 3px;
+    left: calc(var(--node) / 2 - 1.5px);
     background: linear-gradient(180deg, var(--petrol-bright), var(--orange));
-    transform: scaleY(min(1, calc(var(--progress) * 1.35)));
+    transform: scaleY(var(--e));
     transform-origin: top;
+    animation: none;
+  }
+  .process__spark {
+    display: none;
   }
   .pstep {
-    padding-left: calc(var(--node) + 1.25rem);
+    padding-left: calc(var(--node) + 1rem);
     min-height: var(--node);
+  }
+  .pstep__body {
+    padding-top: 0.6rem;
+  }
+  .pstep__node::after {
+    display: none;
   }
   .pstep__node {
     position: absolute;
     left: 0;
-    top: -0.5rem;
+    top: 0;
+    margin: 0;
   }
 }

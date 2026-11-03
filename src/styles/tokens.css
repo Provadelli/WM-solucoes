@@ -1,44 +1,47 @@
 :root {
   /* Cores da marca */
   --orange: #ff6b00;
+  --orange-soft: #ff8a33;
   --orange-deep: #b34700; /* laranja para texto sobre fundo claro (contraste AA) */
   --petrol: #057482;
   --petrol-bright: #19b3c4;
   --steel: #055182;
   --night: #0a0f1d;
-  --night-2: #101828;
-  --night-3: #18233a;
-  --mist: #f1f5f9;
+  --night-2: #0f1626;
+  --night-3: #162036;
+  --line: rgb(255 255 255 / 0.1);
+  --line-strong: rgb(255 255 255 / 0.18);
+  --mist: #f3f5f8;
   --aluminum: #c0c4c7;
-  --ink: #16202f;
-  --ink-soft: #445163;
+  --ink: #111a29;
+  --ink-soft: #46546a;
   --white: #ffffff;
   --lamp-green: #39d98a;
 
   /* Tipografia */
-  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
-  /* Escala 1.25 */
   --fs-sm: 0.875rem;
   --fs-base: 1rem;
-  --fs-md: 1.25rem;
-  --fs-lg: 1.563rem;
-  --fs-xl: 1.953rem;
-  --fs-2xl: 2.441rem;
-  --fs-3xl: clamp(2.75rem, 6.4vw, 5.4rem);
+  --fs-md: 1.2rem;
+  --fs-lg: 1.45rem;
+  --fs-xl: 1.9rem;
 
-  /* Forma */
-  --radius-s: 10px;
-  --radius-m: 18px;
-  --radius-l: 28px;
+  /* Forma: cantos discretos, mais técnicos */
+  --radius-s: 4px;
+  --radius-btn: 6px;
+  --radius-m: 8px;
+  --radius-l: 12px;
   --radius-pill: 999px;
 
   /* Espaço */
   --gutter: clamp(16px, 4vw, 48px);
-  --max: 1240px;
-  --section: clamp(4.5rem, 10vw, 8rem);
+  --max: 1280px;
+  --section: clamp(5rem, 11vw, 9rem);
 
-  --ease-current: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-current: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 0.68, 0, 1);
 }

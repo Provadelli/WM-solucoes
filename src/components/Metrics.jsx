@@ -28,6 +28,7 @@ function Counter({ to, delay }) {
   return n
 }
 
+/** Métricas soltas sobre o vídeo, ligadas por um condutor vertical que se energiza */
 export default function Metrics() {
   return (
     <div className="metrics">
@@ -41,13 +42,12 @@ export default function Metrics() {
               {m.suffix} {m.label}
             </span>
             <span className="metric__value" aria-hidden="true">
-              <Counter to={m.value} delay={600 + i * 120} />
-              {m.suffix}
+              <Counter to={m.value} delay={900 + i * 150} />
+              <span className="metric__suffix">{m.suffix}</span>
             </span>
             <span className="metric__label" aria-hidden="true">
               {m.label}
             </span>
-            <span className="metric__bar" aria-hidden="true" />
           </li>
         ))}
       </ul>

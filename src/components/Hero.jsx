@@ -1,11 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import Button from './Button.jsx'
 import VideoBackground from './VideoBackground.jsx'
 import Metrics from './Metrics.jsx'
 import { contact } from '../data/content.js'
 import './Hero.css'
 
-const lines = ['Automação industrial', 'testada antes de chegar', 'à sua fábrica']
+// Cada palavra sobe de dentro de uma máscara; "hl" marca o destaque
+const title = [
+  [['Automação'], ['industrial']],
+  [['testada', 'hl'], ['antes'], ['de'], ['chegar']],
+  [['à'], ['sua'], ['fábrica']],
+]
 
 export default function Hero() {
   const ref = useRef(null)
@@ -30,6 +35,7 @@ export default function Hero() {
     }
   }, [])
 
+  let w = 0
   return (
     <section id="topo" className="hero" ref={ref} aria-labelledby="hero-title">
       <VideoBackground
@@ -43,14 +49,22 @@ export default function Hero() {
       <div className="container hero__inner">
         <div className="hero__copy">
           <h1 id="hero-title" className="hero__title">
-            {lines.map((line, i) => (
-              <span className="hero__line" key={line}>
-                <span style={{ '--i': i }}>{line}</span>{' '}
+            {title.map((line, l) => (
+              <span className="hero__line" key={l}>
+                {line.map(([word, cls]) => (
+                  <Fragment key={word}>
+                    <span className="hero__word">
+                      <span className={cls} style={{ '--w': w++ }}>
+                        {word}
+                      </span>
+                    </span>{' '}
+                  </Fragment>
+                ))}
               </span>
             ))}
           </h1>
           <p className="hero__lead">
-            CLP e IHM simulados em gêmeo digital, painéis sob medida e comissionamento sem parar sua produção.
+            CLP e IHM simulados em gêmeo digital, painéis sob medida e comissionamento sem parar a sua produção.
           </p>
           <div className="hero__actions">
             <Button variant="orange" href={contact.whatsapp} icon="whatsapp">

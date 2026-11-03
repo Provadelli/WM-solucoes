@@ -1,0 +1,234 @@
+/* Subjanela que acompanha o cursor */
+.pv {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  width: 280px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.pv__card {
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--night-2);
+  color: var(--white);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  box-shadow:
+    0 40px 80px -30px rgb(10 15 29 / 0.75),
+    0 0 0 1px rgb(255 107 0 / 0.08);
+  opacity: 0;
+  transform: scale(0.88) translateY(8px);
+  transform-origin: 0 30%;
+  transition:
+    opacity 0.25s ease,
+    transform 0.4s var(--ease-out);
+}
+
+.pv.is-visible .pv__card {
+  opacity: 1;
+  transform: none;
+}
+
+.pv__inner {
+  animation: pv-swap 0.4s var(--ease-out);
+}
+
+@keyframes pv-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.pv-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--night-3);
+}
+
+.pv-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: pv-zoom 6s ease-out both;
+}
+
+@keyframes pv-zoom {
+  from {
+    transform: scale(1.12);
+  }
+}
+
+/* Linha de varredura sobre a imagem */
+.pv-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgb(25 179 196 / 0.22) 50%, transparent 52%);
+  background-size: 100% 220%;
+  animation: pv-scan 2.6s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes pv-scan {
+  from {
+    background-position: 0 120%;
+  }
+  to {
+    background-position: 0 -120%;
+  }
+}
+
+.pv__body {
+  padding: 1rem 1.1rem 1.1rem;
+  border-top: 2px solid var(--orange);
+}
+
+.pv__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pv__text {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.pv__steps {
+  position: relative;
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+/* Condutor ligando as etapas */
+.pv__steps::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--orange), var(--petrol-bright));
+  transform-origin: top;
+  animation: pv-line 0.9s var(--ease-out) 0.1s both;
+}
+
+@keyframes pv-line {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.pv__steps li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  color: rgb(255 255 255 / 0.9);
+  animation: pv-step 0.5s var(--ease-out) both;
+  animation-delay: calc(0.12s + var(--s) * 0.12s);
+}
+
+@keyframes pv-step {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+}
+
+.pv__step-n {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: var(--night-2);
+  border: 1px solid var(--orange);
+  color: var(--orange);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+/* Mini-animação de rede */
+.pv-media--anim {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgb(5 116 130 / 0.35), transparent 70%),
+    var(--night-3);
+}
+
+.pv-media--anim::after {
+  display: none;
+}
+
+.pv-anim {
+  width: 92%;
+  height: auto;
+}
+
+.pv-anim__box {
+  fill: rgb(255 255 255 / 0.04);
+  stroke: rgb(255 255 255 / 0.35);
+  stroke-width: 1.2;
+}
+
+.pv-anim__box--hot {
+  stroke: var(--orange);
+  fill: rgb(255 107 0 / 0.1);
+}
+
+.pv-anim__txt {
+  fill: var(--white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.pv-anim__bus {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.3);
+  stroke-width: 1.5;
+}
+
+.pv-anim__flow {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 2;
+  stroke-dasharray: 4 14;
+  animation: pv-flow 1.2s linear infinite;
+  filter: drop-shadow(0 0 3px rgb(255 107 0 / 0.8));
+}
+
+@keyframes pv-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+.pv-anim__node {
+  fill: var(--night);
+  stroke: var(--petrol-bright);
+  stroke-width: 1.5;
+  animation: pv-blink 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--n) * 0.25s);
+}
+
+@keyframes pv-blink {
+  50% {
+    fill: var(--petrol-bright);
+  }
+}

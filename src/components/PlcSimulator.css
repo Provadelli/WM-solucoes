@@ -1,16 +1,61 @@
 .plc {
-  --off: rgb(255 255 255 / 0.22);
+  --off: rgb(255 255 255 / 0.2);
   position: relative;
-  border: 1px solid rgb(255 255 255 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.1);
   border-radius: var(--radius-l);
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgb(5 81 130 / 0.18), rgb(10 15 29 / 0.6)),
-    var(--night-2);
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgb(5 116 130 / 0.22), transparent 70%),
+    linear-gradient(180deg, var(--night-2), rgb(10 15 29 / 0.95));
   box-shadow:
-    0 30px 80px -30px rgb(0 0 0 / 0.7),
-    inset 0 1px 0 rgb(255 255 255 / 0.06);
+    0 40px 90px -40px rgb(0 0 0 / 0.8),
+    0 0 0 1px rgb(255 255 255 / 0.02),
+    inset 0 1px 0 rgb(255 255 255 / 0.07);
   color: var(--white);
+}
+
+/* Moldura: cantos acesos em laranja */
+.plc::before,
+.plc::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--orange);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.plc::before {
+  top: 10px;
+  left: 10px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.plc::after {
+  right: 10px;
+  bottom: 10px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.plc__gridline {
+  stroke: rgb(255 255 255 / 0.035);
+  stroke-width: 1;
+}
+
+.plc__scanline {
+  animation: plc-scan 3.2s linear infinite;
+}
+
+@keyframes plc-scan {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(250px);
+  }
 }
 
 .plc__top {
@@ -19,7 +64,7 @@
   align-items: center;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid rgb(255 255 255 / 0.08);
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--aluminum);
 }
@@ -109,6 +154,26 @@
   transition: fill 0.2s ease;
 }
 
+.coil__pulse {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: coil-pulse 1.4s var(--ease-out) infinite;
+}
+
+@keyframes coil-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
 .coil.is-on .coil__core {
   fill: rgb(255 107 0 / 0.35);
   filter: drop-shadow(0 0 10px rgb(255 107 0 / 0.9));
@@ -117,7 +182,7 @@
 .sym__addr,
 .sym__name {
   text-anchor: middle;
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 11px;
 }
 
@@ -157,8 +222,8 @@
 }
 
 .hmi > div {
-  padding: 0.6rem 0.75rem;
-  background: var(--night);
+  padding: 0.65rem 0.8rem;
+  background: rgb(10 15 29 / 0.92);
 }
 
 .hmi dt {
@@ -166,10 +231,20 @@
   color: var(--aluminum);
 }
 
+.hmi__bar {
+  display: block;
+  height: 2px;
+  margin-top: 0.4rem;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--petrol-bright), var(--orange));
+  transform: scaleX(var(--v, 0));
+  transform-origin: left;
+}
+
 .hmi dd {
   white-space: nowrap;
   margin: 0;
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
 }
@@ -190,6 +265,9 @@
   border-radius: 50%;
   background: var(--off);
   flex: none;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .hmi--run .hmi__lamp {
