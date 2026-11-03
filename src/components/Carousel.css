@@ -1,0 +1,140 @@
+.carousel {
+  --ctl: var(--white);
+  --ctl-soft: rgb(255 255 255 / 0.3);
+}
+
+.carousel--light {
+  --ctl: var(--ink);
+  --ctl-soft: rgb(22 32 47 / 0.28);
+}
+
+.carousel__viewport {
+  overflow: hidden;
+  /* espaço para sombra e para o card subir no hover */
+  padding-block: 12px 24px;
+  margin-block: -12px -24px;
+  cursor: grab;
+}
+
+.carousel__viewport:active {
+  cursor: grabbing;
+}
+
+.carousel__track {
+  display: flex;
+  gap: var(--carousel-gap, 20px);
+  touch-action: pan-y pinch-zoom;
+}
+
+.carousel__slide {
+  flex: 0 0 var(--slide, calc((100% - 2 * var(--carousel-gap, 20px)) / 3));
+  min-width: 0;
+  opacity: 0.45;
+  transform: scale(0.96);
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s var(--ease-out);
+}
+
+.carousel__slide.is-in-view {
+  opacity: 1;
+  transform: none;
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.carousel__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Alvo de toque de 24px (WCAG 2.5.8), marca visual menor */
+.carousel__dot {
+  position: relative;
+  width: 28px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.carousel__dot::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 4px;
+  background: var(--ctl-soft);
+  transition:
+    background 0.3s ease,
+    transform 0.3s var(--ease-out);
+}
+
+.carousel__dot:hover::before {
+  background: var(--ctl);
+}
+
+.carousel__dot.is-active::before {
+  background: var(--orange);
+  transform: scaleY(1.4);
+}
+
+.carousel__arrows {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.carousel__arrow {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--ctl);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ctl);
+  cursor: pointer;
+  transition:
+    background 0.3s var(--ease-current),
+    color 0.3s var(--ease-current),
+    border-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.carousel__arrow:hover:not(:disabled) {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--night);
+}
+
+.carousel__arrow:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.carousel__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (max-width: 1000px) {
+  .carousel__slide {
+    flex-basis: var(--slide-md, calc((100% - var(--carousel-gap, 20px)) / 2));
+  }
+}
+
+@media (max-width: 640px) {
+  .carousel__slide {
+    flex-basis: var(--slide-sm, 86%);
+  }
+}

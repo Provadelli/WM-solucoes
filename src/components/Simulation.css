@@ -1,0 +1,73 @@
+.simulation {
+  position: relative;
+  padding-block: var(--section);
+  color: var(--white);
+  background:
+    radial-gradient(ellipse 55% 60% at 85% 40%, rgb(5 116 130 / 0.35), transparent 70%),
+    radial-gradient(ellipse 45% 60% at 0% 100%, rgb(5 81 130 / 0.4), transparent 70%),
+    var(--night);
+  overflow: hidden;
+}
+
+.simulation__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.simulation__copy p {
+  margin-top: 1.25rem;
+  max-width: 50ch;
+  font-size: 1.1rem;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.simulation__points {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.simulation__points li {
+  position: relative;
+  padding-left: 2rem;
+  color: rgb(255 255 255 / 0.9);
+}
+
+/* Marcador: contato fechado energizado */
+.simulation__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 18px;
+  height: 10px;
+  border-left: 3px solid var(--orange);
+  border-right: 3px solid var(--orange);
+  box-shadow: inset 0 -0 0 transparent;
+}
+
+.simulation__points li::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: calc(0.55em + 4px);
+  width: 10px;
+  height: 2px;
+  background: var(--orange);
+}
+
+.simulation__placeholder {
+  aspect-ratio: 560 / 420;
+  border-radius: var(--radius-l);
+  background: var(--night-2);
+}
+
+@media (max-width: 960px) {
+  .simulation__grid {
+    grid-template-columns: 1fr;
+  }
+}

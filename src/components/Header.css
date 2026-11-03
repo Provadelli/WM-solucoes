@@ -1,0 +1,230 @@
+.header {
+  --page: 0;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  color: var(--white);
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+  animation: header-in 0.9s var(--ease-out) both;
+}
+
+@keyframes header-in {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+.header.is-scrolled,
+.header.is-open {
+  background: color-mix(in srgb, var(--night) 86%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.header__bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 80px;
+  transition: height 0.35s var(--ease-out);
+}
+
+.is-scrolled .header__bar {
+  height: 68px;
+}
+
+.header__brand {
+  border-radius: var(--radius-s);
+}
+
+.header__brand img {
+  height: 44px;
+  width: auto;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.header__brand:hover img {
+  transform: scale(1.05);
+}
+
+/* Condutor que se energiza conforme a página rola */
+.header__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--petrol-bright), var(--orange));
+  transform: scaleX(var(--page));
+  transform-origin: left;
+  box-shadow: 0 0 10px rgb(255 107 0 / 0.6);
+}
+
+.header__nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header__nav ul {
+  display: flex;
+  gap: 1.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__nav ul a {
+  position: relative;
+  display: inline-block;
+  padding-block: 0.6rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: rgb(255 255 255 / 0.85);
+  transition: color 0.2s ease;
+}
+
+.header__nav ul a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.25rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease-current);
+}
+
+.header__nav ul a:hover {
+  color: var(--white);
+}
+
+.header__nav ul a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.header__toggle {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .header__toggle {
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: 2px solid rgb(255 255 255 / 0.55);
+    border-radius: 50%;
+    color: var(--white);
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .header__toggle:active {
+    transform: scale(0.94);
+  }
+
+  .header__toggle-bars,
+  .header__toggle-bars::before,
+  .header__toggle-bars::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition:
+      transform 0.35s var(--ease-current),
+      background 0.2s;
+  }
+
+  .header__toggle-bars {
+    position: relative;
+  }
+
+  .header__toggle-bars::before,
+  .header__toggle-bars::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .header__toggle-bars::before {
+    top: -6px;
+  }
+
+  .header__toggle-bars::after {
+    top: 6px;
+  }
+
+  .is-open .header__toggle {
+    border-color: var(--orange);
+  }
+
+  .is-open .header__toggle-bars {
+    background: transparent;
+  }
+
+  .is-open .header__toggle-bars::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .is-open .header__toggle-bars::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .header__nav {
+    position: fixed;
+    inset: 68px 0 0;
+    height: calc(100dvh - 68px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem var(--gutter);
+    background: var(--night);
+    clip-path: circle(0 at calc(100% - 40px) 0);
+    visibility: hidden;
+    transition:
+      clip-path 0.6s var(--ease-current),
+      visibility 0.6s;
+  }
+
+  .is-open .header__nav {
+    clip-path: circle(150% at calc(100% - 40px) 0);
+    visibility: visible;
+  }
+
+  .header__nav ul {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .header__nav ul li {
+    opacity: 0;
+    transform: translateX(24px);
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s var(--ease-out);
+  }
+
+  .is-open .header__nav ul li {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(0.15s + var(--i) * 60ms);
+  }
+
+  .header__nav ul a {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,123 @@
+.process {
+  padding-block: var(--section);
+  color: var(--white);
+  background:
+    radial-gradient(ellipse 70% 80% at 100% 0%, rgb(5 116 130 / 0.5), transparent 60%),
+    var(--steel);
+}
+
+.process .section-head p {
+  color: rgb(255 255 255 / 0.85);
+}
+
+.process__steps {
+  --node: 56px;
+  --progress: 0;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+/* Condutor apagado */
+.process__steps::before,
+.process__steps::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--node) / 2 - 1.5px);
+  left: calc(var(--node) / 2);
+  right: calc(25% - var(--node) / 2 + 0.5rem);
+  height: 3px;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 0.2);
+}
+
+/* Condutor energizado: acompanha a rolagem */
+.process__steps::after {
+  background: linear-gradient(90deg, var(--petrol-bright), var(--orange));
+  box-shadow: 0 0 12px rgb(255 107 0 / 0.7);
+  transform: scaleX(min(1, calc(var(--progress) * 1.35)));
+  transform-origin: left;
+}
+
+.pstep {
+  /* acende quando o condutor chega até a etapa */
+  --lit: clamp(0, calc((var(--progress) * 1.35 * 3 - var(--n)) * 4 + 1), 1);
+  position: relative;
+}
+
+.pstep__node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  margin-bottom: 1.5rem;
+  border-radius: 50%;
+  border: 3px solid rgb(255 255 255 / 0.35);
+  background: var(--steel);
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.pstep__node::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 3px solid var(--orange);
+  background: rgb(255 107 0 / 0.18);
+  box-shadow: 0 0 22px rgb(255 107 0 / 0.65);
+  opacity: var(--lit);
+  transform: scale(calc(0.7 + var(--lit) * 0.3));
+}
+
+.pstep__node > span {
+  position: relative;
+}
+
+.pstep h3 {
+  font-size: var(--fs-lg);
+  margin-bottom: 0.5rem;
+}
+
+.pstep p {
+  color: rgb(255 255 255 / 0.85);
+  max-width: 28ch;
+}
+
+@media (max-width: 860px) {
+  .process__steps {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .process__steps::before,
+  .process__steps::after {
+    top: calc(var(--node) / 2);
+    bottom: 3rem;
+    left: calc(var(--node) / 2 - 1.5px);
+    right: auto;
+    width: 3px;
+    height: auto;
+  }
+  .process__steps::after {
+    background: linear-gradient(180deg, var(--petrol-bright), var(--orange));
+    transform: scaleY(min(1, calc(var(--progress) * 1.35)));
+    transform-origin: top;
+  }
+  .pstep {
+    padding-left: calc(var(--node) + 1.25rem);
+    min-height: var(--node);
+  }
+  .pstep__node {
+    position: absolute;
+    left: 0;
+    top: -0.5rem;
+  }
+}

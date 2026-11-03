@@ -1,0 +1,44 @@
+:root {
+  /* Cores da marca */
+  --orange: #ff6b00;
+  --orange-deep: #b34700; /* laranja para texto sobre fundo claro (contraste AA) */
+  --petrol: #057482;
+  --petrol-bright: #19b3c4;
+  --steel: #055182;
+  --night: #0a0f1d;
+  --night-2: #101828;
+  --night-3: #18233a;
+  --mist: #f1f5f9;
+  --aluminum: #c0c4c7;
+  --ink: #16202f;
+  --ink-soft: #445163;
+  --white: #ffffff;
+  --lamp-green: #39d98a;
+
+  /* Tipografia */
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Escala 1.25 */
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.563rem;
+  --fs-xl: 1.953rem;
+  --fs-2xl: 2.441rem;
+  --fs-3xl: clamp(2.75rem, 6.4vw, 5.4rem);
+
+  /* Forma */
+  --radius-s: 10px;
+  --radius-m: 18px;
+  --radius-l: 28px;
+  --radius-pill: 999px;
+
+  /* Espaço */
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1240px;
+  --section: clamp(4.5rem, 10vw, 8rem);
+
+  --ease-current: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

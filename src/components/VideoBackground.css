@@ -1,0 +1,100 @@
+.vbg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--night);
+}
+
+.vbg__poster,
+.vbg__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* leve aproximação com a rolagem (parallax) */
+  transform: scale(calc(1.06 + var(--hero, 0) * 0.08)) translateY(calc(var(--hero, 0) * 6%));
+  transform-origin: center 30%;
+}
+
+.vbg__poster {
+  animation: vbg-zoom 1.8s var(--ease-out) both;
+}
+
+@keyframes vbg-zoom {
+  from {
+    opacity: 0;
+    scale: 1.12;
+  }
+}
+
+.vbg__video {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.vbg__video.is-ready {
+  opacity: 1;
+}
+
+/* Camada escura para garantir contraste do texto (WCAG) */
+.vbg__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(10 15 29 / 0.94) 0%, rgb(10 15 29 / 0.8) 42%, rgb(10 15 29 / 0.42) 100%),
+    linear-gradient(0deg, var(--night) 0%, rgb(10 15 29 / 0) 38%);
+}
+
+.vbg__toggle {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(1.25rem, 3vw, 2rem);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid rgb(255 255 255 / 0.4);
+  border-radius: var(--radius-pill);
+  background: rgb(10 15 29 / 0.5);
+  backdrop-filter: blur(8px);
+  color: var(--white);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.2s ease;
+}
+
+.vbg__toggle:hover {
+  border-color: var(--orange);
+  background: rgb(255 107 0 / 0.15);
+}
+
+.vbg__toggle:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 700px) {
+  .vbg__shade {
+    background:
+      linear-gradient(180deg, rgb(10 15 29 / 0.7) 0%, rgb(10 15 29 / 0.86) 55%, var(--night) 100%);
+  }
+  .vbg__toggle span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .vbg__toggle {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+    top: 84px;
+    bottom: auto;
+  }
+}

@@ -1,0 +1,97 @@
+.privacy__hero {
+  padding: 150px 0 clamp(2.5rem, 5vw, 4rem);
+  background:
+    radial-gradient(ellipse 60% 80% at 90% 0%, rgb(5 116 130 / 0.45), transparent 60%),
+    var(--night);
+  color: var(--white);
+}
+
+.privacy__hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.4rem);
+  max-width: 16ch;
+  animation: fade-up 0.8s var(--ease-out) both;
+}
+
+.privacy__hero p {
+  margin-top: 1rem;
+  color: rgb(255 255 255 / 0.8);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.privacy__body {
+  max-width: 860px;
+  padding-block: clamp(3rem, 6vw, 5rem);
+  line-height: 1.7;
+}
+
+.privacy__body section + section {
+  margin-top: 2.75rem;
+}
+
+.privacy__body h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: 0.9rem;
+}
+
+.privacy__body p + p,
+.privacy__body p + ul,
+.privacy__body ul + p,
+.privacy__body .table-wrap + p,
+.privacy__body p + .table-wrap {
+  margin-top: 1rem;
+}
+
+.privacy__body ul {
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.privacy__body a {
+  color: var(--steel);
+  text-underline-offset: 3px;
+}
+
+.fill {
+  padding: 0.05em 0.35em;
+  border-radius: 6px;
+  background: #ffe28a;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius-m);
+  border: 1px solid rgb(22 32 47 / 0.12);
+  background: var(--white);
+}
+
+.privacy table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+}
+
+.privacy th,
+.privacy td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgb(22 32 47 / 0.08);
+}
+
+.privacy th {
+  background: var(--mist);
+  font-weight: 600;
+}
+
+.privacy tr:last-child td {
+  border-bottom: 0;
+}
