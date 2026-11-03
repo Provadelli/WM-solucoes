@@ -118,9 +118,10 @@ export const servicePillars = [
     cards: [
       {
         name: 'Projeto elétrico 3D',
-        detail: 'EPLAN e SEE Electrical',
+        detail: 'EPLAN · gire o modelo em 3D',
         icon: 'cube',
         image: 'projeto-3d',
+        model3d: true,
         text: 'Modelagem 3D do painel: layout, barramento, dissipação térmica e lista de materiais validada antes da compra.',
         steps: ['Levantamento de cargas', 'Modelo 3D e layout interno', 'Lista de materiais validada'],
       },

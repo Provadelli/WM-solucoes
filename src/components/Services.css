@@ -274,6 +274,20 @@
   line-height: 1.25;
 }
 
+.srow__badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--orange-deep);
+  border-radius: var(--radius-s);
+  color: var(--orange-deep);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  vertical-align: 0.15em;
+}
+
 .srow__detail {
   font-size: 0.9rem;
   color: var(--ink-soft);
@@ -434,5 +448,32 @@
   }
   .sx__panel {
     padding: 1.25rem 1rem;
+  }
+}
+
+/* Espaço do visualizador 3D enquanto o código carrega */
+.p3d-loading {
+  aspect-ratio: 4 / 3;
+  max-height: 480px;
+  border-radius: var(--radius-m);
+  background: var(--night-3);
+  animation: p3d-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes p3d-pulse {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 640px) {
+  .p3d-loading {
+    aspect-ratio: 1 / 1.05;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p3d-loading {
+    animation: none;
   }
 }

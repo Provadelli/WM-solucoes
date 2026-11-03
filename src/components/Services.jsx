@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Icon from './Icon.jsx'
 import Button from './Button.jsx'
 import ServicePreview, { PreviewMedia } from './ServicePreview.jsx'
 import useReveal from '../hooks/useReveal.js'
 import { photo, servicePillars, whatsappAbout } from '../data/content.js'
 import './Services.css'
+
+// Three.js só é baixado quando o modelo 3D é aberto
+const Panel3D = lazy(() => import('./Panel3D.jsx'))
 
 const HOVER_QUERY = '(hover: hover) and (pointer: fine)'
 const pad = (n) => String(n).padStart(2, '0')
@@ -51,7 +54,9 @@ export default function Services() {
 
   const select = (i, focus) => {
     setActive(i)
-    setOpen(null)
+    // na área com modelo 3D, já abre o visualizador
+    const idx3d = servicePillars[i].cards.findIndex((c) => c.model3d)
+    setOpen(idx3d >= 0 ? idx3d : null)
     setHovered(null)
     if (focus) tabRefs.current[i]?.focus()
     // no mobile a lista de áreas rola na horizontal
@@ -80,7 +85,8 @@ export default function Services() {
     setHovered(i)
   }
 
-  const previewCard = hovered !== null ? pillar.cards[hovered] : null
+  // o card com modelo 3D não usa a prévia flutuante (o visualizador fica na própria linha)
+  const previewCard = hovered !== null && !pillar.cards[hovered].model3d ? pillar.cards[hovered] : null
 
   return (
     <section id="servicos" className="services on-light" aria-labelledby="services-title" ref={ref}>
@@ -148,7 +154,10 @@ export default function Services() {
                     >
                       <span className="srow__num">{pad(i + 1)}</span>
                       <Thumb card={c} />
-                      <span className="srow__name">{c.name}</span>
+                      <span className="srow__name">
+                        {c.name}
+                        {c.model3d && <span className="srow__badge">3D</span>}
+                      </span>
                       <span className="srow__detail">{c.detail}</span>
                       <span className="srow__more" aria-hidden="true">
                         <Icon name={expanded ? 'close' : 'arrowUpRight'} size={18} />
@@ -156,7 +165,13 @@ export default function Services() {
                     </button>
 
                     <div className="srow__body" id={`srow-${pillar.id}-${i}`} hidden={!expanded}>
-                      {!canHover && <PreviewMedia card={c} sizes="90vw" />}
+                      {c.model3d
+                        ? expanded && (
+                            <Suspense fallback={<div className="p3d-loading" aria-hidden="true" />}>
+                              <Panel3D fallbackCard={c} />
+                            </Suspense>
+                          )
+                        : !canHover && <PreviewMedia card={c} sizes="90vw" />}
                       <p>{c.text}</p>
                       <ol className="srow__steps">
                         {c.steps.map((s) => (
