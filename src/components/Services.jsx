@@ -23,6 +23,19 @@ function useCanHover() {
   return can
 }
 
+/** Só monta o conteúdo quando ele chega perto da tela */
+function WhenNear({ children }) {
+  const ref = useRef(null)
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    if (near) return
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setNear(true), { rootMargin: '400px 0px' })
+    io.observe(ref.current)
+    return () => io.disconnect()
+  }, [near])
+  return near ? children : <div ref={ref} className="p3d-loading" aria-hidden="true" />
+}
+
 /** Miniatura do serviço; sem foto, mostra o ícone */
 function Thumb({ card }) {
   if (!card.image) {
@@ -44,7 +57,11 @@ export default function Services() {
   const ref = useReveal()
   const canHover = useCanHover()
   const [active, setActive] = useState(0)
-  const [open, setOpen] = useState(null) // serviço expandido (clique/toque)
+  // serviço expandido (clique/toque); começa com o modelo 3D aberto, se houver
+  const [open, setOpen] = useState(() => {
+    const i = servicePillars[0].cards.findIndex((c) => c.model3d)
+    return i >= 0 ? i : null
+  })
   const [hovered, setHovered] = useState(null) // serviço sob o cursor
   const pointer = useRef({ x: 0, y: 0 })
   const tabRefs = useRef([])
@@ -167,9 +184,11 @@ export default function Services() {
                     <div className="srow__body" id={`srow-${pillar.id}-${i}`} hidden={!expanded}>
                       {c.model3d
                         ? expanded && (
-                            <Suspense fallback={<div className="p3d-loading" aria-hidden="true" />}>
-                              <Panel3D fallbackCard={c} />
-                            </Suspense>
+                            <WhenNear>
+                              <Suspense fallback={<div className="p3d-loading" aria-hidden="true" />}>
+                                <Panel3D fallbackCard={c} />
+                              </Suspense>
+                            </WhenNear>
                           )
                         : !canHover && <PreviewMedia card={c} sizes="90vw" />}
                       <p>{c.text}</p>
