@@ -458,6 +458,7 @@
   border-radius: var(--radius-m);
   background: var(--night-3);
   animation: p3d-pulse 1.4s ease-in-out infinite;
+  will-change: opacity;
 }
 
 @keyframes p3d-pulse {
